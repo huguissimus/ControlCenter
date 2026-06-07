@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Argument OS - Today Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #020617; /* surface-bg */
+            color: #d4e4fa; /* on-surface */
+            overflow-x: hidden;
+        }
+        /* Custom Scrollbar for Operational Feel */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-background": "#d4e4fa",
+                      "status-danger": "#EF4444",
+                      "tertiary-container": "#231500",
+                      "on-primary-container": "#798098",
+                      "on-tertiary": "#3e2d11",
+                      "surface-container-highest": "#273647",
+                      "tertiary-fixed": "#fcdeb5",
+                      "surface-low": "#0F172A",
+                      "surface-bg": "#020617",
+                      "status-info": "#0EA5E9",
+                      "tertiary": "#dec29a",
+                      "on-secondary-fixed-variant": "#004c69",
+                      "error-container": "#93000a",
+                      "on-tertiary-container": "#957d5a",
+                      "inverse-on-surface": "#233143",
+                      "surface-container-lowest": "#010f1f",
+                      "on-secondary-container": "#00374d",
+                      "primary": "#bec6e0",
+                      "surface": "#051424",
+                      "on-secondary": "#00354a",
+                      "on-surface-variant": "#c6c6cd",
+                      "inverse-primary": "#565e74",
+                      "primary-container": "#0f172a",
+                      "status-warning": "#F59E0B",
+                      "surface-high": "#334155",
+                      "surface-dim": "#051424",
+                      "on-error": "#690005",
+                      "secondary-container": "#00a6e0",
+                      "surface-variant": "#273647",
+                      "surface-container": "#122131",
+                      "surface-container-low": "#0d1c2d",
+                      "on-primary-fixed": "#131b2e",
+                      "primary-fixed": "#dae2fd",
+                      "on-surface": "#d4e4fa",
+                      "on-secondary-fixed": "#001e2c",
+                      "on-error-container": "#ffdad6",
+                      "background": "#051424",
+                      "surface-bright": "#2c3a4c",
+                      "secondary-fixed-dim": "#7bd0ff",
+                      "on-primary": "#283044",
+                      "outline-variant": "#45464d",
+                      "surface-container-high": "#1c2b3c",
+                      "on-tertiary-fixed": "#271901",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "secondary-fixed": "#c4e7ff",
+                      "secondary": "#7bd0ff",
+                      "surface-mid": "#1E293B",
+                      "tertiary-fixed-dim": "#dec29a",
+                      "on-tertiary-fixed-variant": "#574425",
+                      "inverse-surface": "#d4e4fa",
+                      "surface-tint": "#bec6e0",
+                      "error": "#ffb4ab",
+                      "status-success": "#10B981",
+                      "outline": "#909097",
+                      "status-pending": "#64748B",
+                      "primary-fixed-dim": "#bec6e0"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-edge": "24px",
+                      "gutter-compact": "8px",
+                      "gutter-normal": "16px",
+                      "panel-padding": "12px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "mono-data": ["JetBrains Mono"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary selection:text-on-primary">
+<!-- PRIMARY SHELL (SIDE NAV BAR - LEFT) -->
+<aside class="w-[240px] h-full fixed left-0 top-0 border-r border-outline-variant bg-surface-low flex flex-col py-panel-padding z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">Argument OS</h1>
+<p class="text-[10px] font-mono-data text-outline uppercase tracking-widest mt-1">Operational Console</p>
+</div>
+<div class="px-4 mb-6">
+<div class="flex items-center gap-3 p-3 bg-surface-container rounded-lg border border-outline-variant">
+<img alt="Operator Profile" class="w-8 h-8 rounded-full bg-surface-high" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtrK31OOgwd54qLyONHZNk-BZNyIxsw2Ise_vX4k2VPW3CYQ8-Cka96ZpP2tm4mQbDrtlOY02H4_9Ld0LZoQgN47YEkW6kqkabqU0zo-Id7zNzxnhsSphbYcLo8Brr7XopX2za2z9g42jCa0ZrsHZ1ukEtsnDBFgXc1R70pCNeefht_pVPmQ7MD4deKDivzCkG5P37hGTyvpaORDMqRJ1nCPFyZFkwwaGjdjhFLtlfpRmG08-64Zd-1ag-kagMOQW1_mJMEtCGzA"/>
+<div class="overflow-hidden">
+<p class="font-label-md text-on-surface truncate">System Operator</p>
+<p class="text-[10px] text-on-surface-variant truncate">Station 04 - Secure</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2.5 rounded transition-colors duration-200 text-on-surface-variant hover:bg-surface-mid hover:text-on-surface" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-md">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded transition-colors duration-200 bg-surface-high text-primary border-l-2 border-primary" href="#">
+<span class="material-symbols-outlined text-[20px]">event_upcoming</span>
+<span class="font-body-md">Today</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded transition-colors duration-200 text-on-surface-variant hover:bg-surface-mid hover:text-on-surface" href="#">
+<span class="material-symbols-outlined text-[20px]">cases</span>
+<span class="font-body-md">Lanes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded transition-colors duration-200 text-on-surface-variant hover:bg-surface-mid hover:text-on-surface" href="#">
+<span class="material-symbols-outlined text-[20px]">lock_open</span>
+<span class="font-body-md">Blockers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded transition-colors duration-200 text-on-surface-variant hover:bg-surface-mid hover:text-on-surface" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span class="font-body-md">Evidence/Archive</span>
+</a>
+<div class="pt-4 mt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-4 py-2.5 rounded transition-colors duration-200 text-on-surface-variant hover:bg-surface-mid hover:text-on-surface" href="#">
+<span class="material-symbols-outlined text-[20px]">lock_open</span>
+<span class="font-body-md">Permissions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded transition-colors duration-200 text-on-surface-variant hover:bg-surface-mid hover:text-on-surface" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- TOP NAVIGATION BAR -->
+<header class="h-14 fixed top-0 right-0 left-[240px] z-40 border-b border-outline-variant bg-surface-bg flex items-center justify-between px-margin-edge w-full">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight">Command Console</span>
+<nav class="flex gap-6">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Local Mode</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Static View</a>
+<a class="font-label-caps text-label-caps text-status-success font-bold border-b-2 border-status-success" href="#">Live Truth</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<input class="bg-surface-low border border-outline-variant rounded-full px-4 py-1 text-sm w-64 focus:outline-none focus:border-secondary transition-all" placeholder="Search operational data..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined">security</span></button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined">help</span></button>
+</div>
+<div class="flex items-center gap-2 ml-4">
+<button class="px-4 py-1 text-label-caps font-bold text-on-surface border border-outline-variant rounded hover:bg-surface-mid transition-all">Prepare</button>
+<button class="px-4 py-1 text-label-caps font-bold bg-primary text-on-primary rounded hover:opacity-90 transition-all">Execute Gate</button>
+</div>
+</div>
+</header>
+<!-- MAIN CONTENT CANVAS -->
+<main class="ml-[240px] pt-14 p-margin-edge min-h-screen">
+<!-- TOP STATUS STRIP -->
+<div class="grid grid-cols-3 gap-gutter-normal mb-margin-edge">
+<div class="flex items-center gap-3 px-4 py-3 bg-surface-low border border-outline-variant rounded">
+<span class="material-symbols-outlined text-status-info">lan</span>
+<div>
+<p class="text-[10px] font-label-caps text-on-surface-variant uppercase tracking-wider">System State</p>
+<p class="font-mono-data text-on-surface">Local Mode: Active (Isolated)</p>
+</div>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 bg-surface-low border border-outline-variant rounded">
+<span class="material-symbols-outlined text-status-warning">supervised_user_circle</span>
+<div>
+<p class="text-[10px] font-label-caps text-on-surface-variant uppercase tracking-wider">Permission Posture</p>
+<p class="font-mono-data text-on-surface">Human-in-the-loop: Required</p>
+</div>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 bg-surface-low border border-outline-variant rounded">
+<span class="material-symbols-outlined text-status-success">token</span>
+<div>
+<p class="text-[10px] font-label-caps text-on-surface-variant uppercase tracking-wider">Current Cycle</p>
+<p class="font-mono-data text-on-surface">Current Pass: 04 (Validated)</p>
+</div>
+</div>
+</div>
+<!-- BENTO DASHBOARD GRID -->
+<div class="grid grid-cols-12 gap-gutter-normal">
+<!-- DAILY POSTURE SUMMARY -->
+<div class="col-span-12 lg:col-span-8 p-6 bg-surface-low border border-outline-variant rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 opacity-10">
+<span class="material-symbols-outlined text-[120px] text-primary">security</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="w-2 h-2 rounded-full bg-status-success animate-pulse"></span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Daily Posture: Normal</h2>
+</div>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mb-8">
+                        The Argument OS environment is currently in a steady state. All system parameters are within operational limits for Station 04. No critical failures detected in the last 120 cycles.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<div class="bg-surface-bg border border-outline-variant p-4 rounded-lg flex-1 min-w-[200px]">
+<p class="text-[10px] font-label-caps text-outline mb-1">NEXT SAFE ACTION</p>
+<p class="font-mono-data text-on-surface mb-3">Sync Local/Static Fixtures</p>
+<button class="flex items-center gap-2 text-status-success text-label-caps font-bold hover:underline">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+                                INITIATE SYNC
+                            </button>
+</div>
+<div class="bg-surface-bg border border-outline-variant p-4 rounded-lg flex-1 min-w-[200px]">
+<p class="text-[10px] font-label-caps text-outline mb-1">SYSTEM HEALTH</p>
+<div class="flex items-end gap-1 mb-2 h-8">
+<div class="w-3 bg-status-success h-[60%]"></div>
+<div class="w-3 bg-status-success h-[80%]"></div>
+<div class="w-3 bg-status-success h-[100%]"></div>
+<div class="w-3 bg-status-success h-[90%]"></div>
+<div class="w-3 bg-status-success h-[95%]"></div>
+</div>
+<p class="font-mono-data text-on-surface">99.8% Optimal</p>
+</div>
+</div>
+</div>
+</div>
+<!-- PRIORITY ALERTS -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter-normal">
+<div class="p-5 bg-surface-low border border-outline-variant rounded-xl flex-1">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-caps text-label-caps text-on-surface uppercase tracking-wider">Priority Alerts</h3>
+<span class="bg-status-danger text-white text-[10px] px-2 py-0.5 rounded-full font-bold">3 ACTIVE</span>
+</div>
+<div class="space-y-3">
+<div class="p-3 bg-surface-bg border-l-4 border-status-warning rounded">
+<div class="flex justify-between items-start mb-1">
+<p class="font-label-md text-on-surface">Freshness Risk: Lane 02</p>
+<span class="text-[10px] font-mono-data text-outline">2m ago</span>
+</div>
+<p class="text-[12px] text-on-surface-variant">Stale evidence detected in high-density lane. Requires manual pass.</p>
+</div>
+<div class="p-3 bg-surface-bg border-l-4 border-status-info rounded">
+<div class="flex justify-between items-start mb-1">
+<p class="font-label-md text-on-surface">Upcoming Review</p>
+<span class="text-[10px] font-mono-data text-outline">15m</span>
+</div>
+<p class="text-[12px] text-on-surface-variant">Review required for Operator: Station 03 transition logs.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- ACTIVE BLOCKERS CARD -->
+<div class="col-span-12 md:col-span-6 lg:col-span-5 bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-surface-low flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-on-surface">Active Blockers</h3>
+<span class="material-symbols-outlined text-status-danger text-[20px]">gavel</span>
+</div>
+<div class="p-0">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-bg text-[10px] font-label-caps text-outline uppercase">
+<th class="p-4 border-b border-outline-variant">Origin</th>
+<th class="p-4 border-b border-outline-variant">Status</th>
+<th class="p-4 border-b border-outline-variant text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-mono-data text-[12px]">
+<tr class="hover:bg-surface-mid transition-colors group">
+<td class="p-4 border-b border-outline-variant">
+<div class="flex flex-col">
+<span class="text-on-surface font-bold">Forbidden Lane 04</span>
+<span class="text-outline text-[10px]">Static Fixture Access</span>
+</div>
+</td>
+<td class="p-4 border-b border-outline-variant">
+<span class="text-status-danger">DENIED</span>
+</td>
+<td class="p-4 border-b border-outline-variant text-right">
+<button class="opacity-0 group-hover:opacity-100 text-secondary transition-opacity underline">Request</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-mid transition-colors group">
+<td class="p-4 border-b border-outline-variant">
+<div class="flex flex-col">
+<span class="text-on-surface font-bold">Stale Claim ID_99</span>
+<span class="text-outline text-[10px]">Truth Anchor Mismatch</span>
+</div>
+</td>
+<td class="p-4 border-b border-outline-variant">
+<span class="text-status-warning">PENDING</span>
+</td>
+<td class="p-4 border-b border-outline-variant text-right">
+<button class="opacity-0 group-hover:opacity-100 text-secondary transition-opacity underline">Purge</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- RECENT ACTIVITY FEED -->
+<div class="col-span-12 md:col-span-6 lg:col-span-7 bg-surface-low border border-outline-variant rounded-xl flex flex-col">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-on-surface">Recent Activity (Audited)</h3>
+<div class="flex gap-2">
+<span class="text-[10px] font-mono-data text-status-success bg-status-success/10 px-2 py-0.5 rounded">LOCAL ONLY</span>
+<span class="text-[10px] font-mono-data text-outline">SECURE LOGS</span>
+</div>
+</div>
+<div class="flex-1 p-4 space-y-4">
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded bg-surface-mid flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">history_edu</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline">
+<p class="font-label-md text-on-surface">Automations Rationale Generated</p>
+<p class="text-[10px] font-mono-data text-outline">12:44:01</p>
+</div>
+<p class="text-[12px] text-on-surface-variant mt-1 leading-relaxed">
+<span class="text-outline font-bold">CONTEXT:</span> Logic pass completed on Lane 03 datasets. No human review required for this depth.
+                            </p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded bg-surface-mid flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-status-success">verified_user</span>
+</div>
+<div class="flex-1 border-l-2 border-status-success pl-4 ml-[-18px]">
+<div class="flex justify-between items-baseline">
+<p class="font-label-md text-on-surface">Freshness-Reviewed Truth</p>
+<p class="text-[10px] font-mono-data text-outline">12:30:12</p>
+</div>
+<p class="text-[12px] text-on-surface-variant mt-1 leading-relaxed">
+<span class="text-status-success font-bold">VERIFIED:</span> High-Confidence claim for Lane 01 confirmed by manual audit.
+                            </p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded bg-surface-mid flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">lock</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline">
+<p class="font-label-md text-on-surface">Gate Closure: Station 04</p>
+<p class="text-[10px] font-mono-data text-outline">11:58:44</p>
+</div>
+<p class="text-[12px] text-on-surface-variant mt-1">Manual lock engaged on secondary lanes during maintenance pass.</p>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface-bg border-t border-outline-variant text-center">
+<button class="text-[11px] font-label-caps text-outline hover:text-on-surface tracking-widest transition-colors uppercase">View Full Audit Trail</button>
+</div>
+</div>
+</div>
+</main>
+<!-- RIGHT CONTEXTUAL DRAWER (SIDE NAV BAR - RIGHT) -->
+<aside class="w-[380px] h-full fixed right-0 top-0 z-30 border-l border-outline-variant bg-surface-container-low flex flex-col pt-14 shadow-sm">
+<div class="p-6 border-b border-outline-variant">
+<div class="flex justify-between items-center mb-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Evidence Vault</p>
+<span class="material-symbols-outlined text-[16px] text-outline">info</span>
+</div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Contextual Reference</h2>
+<p class="text-[12px] text-outline mt-1">Audit trail for current viewport focus.</p>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<div class="p-4 bg-surface-low border border-outline-variant rounded relative group">
+<p class="text-[10px] font-mono-data text-outline mb-2">REF_ID: 9822-X</p>
+<img class="w-full h-[120px] object-cover rounded mb-3 bg-surface-bg border border-outline-variant" data-alt="A high-density technical data visualization graph with multiple overlapping lines and point clouds. The style is strictly dark-mode with deep navy backgrounds and glowing accents in emerald and pale blue. The layout is structured on a grid, suggesting a command and control interface with precise mathematical accuracy and clinical precision. Soft volumetric lighting highlights the active data points." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF8e3SomLT29TWi5B2mFe4PsHAfPAxRPsLfeX8H2cwSIjByWwtYB5Y_vJfEg1s1wc2IWfH9wDOVav0DwZmBdAu6IrcaXCLtHgTazx9JZdHyUmJBFcY3_XbTYJAFzyn-FHEvxA119dKsOXynJ7nZA309kwZTK3yHKNXnCgvy1yaM3crtmqOuGXfdJlrhynOFTTG6YORxoHKaLaHks32Btdfnpp6fo0ugHQOEQ21LgCCFI2LfFqwzmTZfWQCKf-SOsNWPLQxBKVd-g"/>
+<p class="font-label-md text-on-surface mb-1">Pass 03 Delta Analysis</p>
+<p class="text-[12px] text-on-surface-variant leading-relaxed">
+                    Comparison between automated pass 03 and manual operator override. Variance remains within 0.02% threshold.
+                </p>
+<div class="mt-4 flex gap-2">
+<button class="px-3 py-1 bg-surface-high rounded text-[10px] font-bold text-on-surface uppercase hover:bg-primary hover:text-on-primary transition-all">Audit</button>
+<button class="px-3 py-1 bg-surface-high rounded text-[10px] font-bold text-on-surface uppercase hover:bg-primary hover:text-on-primary transition-all">Fact Check</button>
+</div>
+</div>
+<div class="p-4 bg-surface-low border border-outline-variant rounded">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-status-warning text-[18px]">warning</span>
+<p class="font-label-md text-on-surface">Lane 02 Freshness Alert</p>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-mono-data">
+<span class="text-outline">Last Sync</span>
+<span class="text-on-surface">04:12:00</span>
+</div>
+<div class="flex justify-between text-[11px] font-mono-data">
+<span class="text-outline">Staleness</span>
+<span class="text-status-danger">+420s</span>
+</div>
+<div class="w-full bg-surface-bg h-1 rounded-full overflow-hidden mt-2">
+<div class="bg-status-danger h-full w-[85%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- DRAWER NAV (ACTIVE: EVIDENCE) -->
+<nav class="h-14 border-t border-outline-variant grid grid-cols-3 bg-surface-container-low">
+<button class="flex flex-col items-center justify-center gap-0.5 text-secondary font-bold">
+<span class="material-symbols-outlined text-[20px]">fact_check</span>
+<span class="text-[9px] font-mono-data tracking-tighter uppercase">Evidence</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-0.5 text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[20px]">history_edu</span>
+<span class="text-[9px] font-mono-data tracking-tighter uppercase">Audit</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-0.5 text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+<span class="text-[9px] font-mono-data tracking-tighter uppercase">Reviews</span>
+</button>
+</nav>
+</aside>
+<!-- INTERACTIVE MICRO-EFFECTS -->
+<script>
+        document.querySelectorAll('.hover\\:bg-surface-mid').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                // Subtle flicker effect on high-importance console items
+                if(el.innerText.includes('Sync') || el.innerText.includes('Truth')) {
+                    el.style.opacity = '0.9';
+                    setTimeout(() => el.style.opacity = '1', 50);
+                }
+            });
+        });
+
+        // Simulating Live Data Updates
+        setInterval(() => {
+            const timeElements = document.querySelectorAll('.font-mono-data.text-outline');
+            // Randomly update timestamps slightly to feel live
+        }, 10000);
+    </script>
+</body></html>

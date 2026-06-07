@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Command Console - Lane Summary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#957d5a",
+                    "inverse-primary": "#565e74",
+                    "on-primary": "#283044",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "on-primary-fixed": "#131b2e",
+                    "surface-high": "#334155",
+                    "on-error-container": "#ffdad6",
+                    "status-pending": "#64748B",
+                    "primary-fixed": "#dae2fd",
+                    "outline": "#909097",
+                    "secondary": "#7bd0ff",
+                    "status-info": "#0EA5E9",
+                    "surface-bright": "#2c3a4c",
+                    "on-secondary-fixed-variant": "#004c69",
+                    "tertiary-fixed-dim": "#dec29a",
+                    "surface-container-low": "#0d1c2d",
+                    "surface-tint": "#bec6e0",
+                    "surface": "#051424",
+                    "on-surface-variant": "#c6c6cd",
+                    "tertiary-container": "#231500",
+                    "secondary-container": "#00a6e0",
+                    "secondary-fixed": "#c4e7ff",
+                    "on-secondary-fixed": "#001e2c",
+                    "on-secondary-container": "#00374d",
+                    "tertiary": "#dec29a",
+                    "surface-container-lowest": "#010f1f",
+                    "status-danger": "#EF4444",
+                    "status-warning": "#F59E0B",
+                    "inverse-surface": "#d4e4fa",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#7bd0ff",
+                    "on-background": "#d4e4fa",
+                    "inverse-on-surface": "#233143",
+                    "background": "#051424",
+                    "on-tertiary-fixed-variant": "#574425",
+                    "surface-container": "#122131",
+                    "on-primary-container": "#798098",
+                    "outline-variant": "#45464d",
+                    "on-secondary": "#00354a",
+                    "surface-container-high": "#1c2b3c",
+                    "on-tertiary": "#3e2d11",
+                    "surface-bg": "#020617",
+                    "on-surface": "#d4e4fa",
+                    "tertiary-fixed": "#fcdeb5",
+                    "surface-low": "#0F172A",
+                    "status-success": "#10B981",
+                    "primary": "#bec6e0",
+                    "surface-variant": "#273647",
+                    "primary-container": "#0f172a",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#273647",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed": "#271901",
+                    "primary-fixed-dim": "#bec6e0",
+                    "surface-dim": "#051424",
+                    "surface-mid": "#1E293B"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-edge": "24px",
+                    "gutter-compact": "8px",
+                    "panel-padding": "12px",
+                    "unit": "4px",
+                    "gutter-normal": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "mono-data": ["JetBrains Mono"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden">
+<!-- SideNavBar (Left) -->
+<aside class="w-[240px] h-full fixed left-0 top-0 border-r border-outline-variant bg-surface-low flex flex-col py-panel-padding z-50">
+<div class="px-gutter-normal mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">System Operator</h1>
+<p class="text-on-surface-variant font-label-md text-[10px] uppercase tracking-widest">Station 04 - Secure</p>
+</div>
+<nav class="flex-1 space-y-unit">
+<div class="px-gutter-compact py-2 cursor-pointer transition-colors duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Overview</span>
+</div>
+<div class="px-gutter-compact py-2 cursor-pointer transition-colors duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="event_upcoming">event_upcoming</span>
+<span class="font-body-md text-body-md">Today</span>
+</div>
+<!-- Active State: Lanes -->
+<div class="px-gutter-compact py-2 cursor-pointer transition-colors duration-200 bg-surface-high text-primary border-l-2 border-primary flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="lanes">cases</span>
+<span class="font-body-md text-body-md">Lanes</span>
+</div>
+<div class="px-gutter-compact py-2 cursor-pointer transition-colors duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="block_external">lock_open</span>
+<span class="font-body-md text-body-md">Blockers</span>
+</div>
+<div class="px-gutter-compact py-2 cursor-pointer transition-colors duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-md text-body-md">Evidence/Archive</span>
+</div>
+<div class="px-gutter-compact py-2 cursor-pointer transition-colors duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid flex items-center gap-3 mt-auto">
+<span class="material-symbols-outlined" data-icon="lock_open">lock_open</span>
+<span class="font-body-md text-body-md">Permissions</span>
+</div>
+<div class="px-gutter-compact py-2 cursor-pointer transition-colors duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</div>
+</nav>
+<div class="px-gutter-normal mt-8 flex items-center gap-3 pt-4 border-t border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Operator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a system security operator in a dimly lit, high-tech command center. The lighting is soft and blue-toned, reflecting off metallic surfaces in the background. The operator has a focused expression, wearing a sleek, modern headset. The overall aesthetic is clean, corporate, and technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWLyB_ewpcpqFpujlLUCrLqSnHjpyoSECAZAU3LD978Z3nQvtS6jOT0gEb217Yk2SWnuVx7eySNTAajzCnS3G7GVmgiMtT6VzDObfYx0Dr6B6Al9cK7Ibam1mw3qXc1ukdBVAI7Z0osxCaJ8pD_FOMUcu3UA-B3DcUqoNrv58iUO0hc9foMY6sVerLxBQagoWA95xGHTtB5kEvR1sEkJT80o3AtdtLhMIFveuQlyhjxVVa4T_t0IP4I-XpLuknK3g3di_d0k6Kfw"/>
+</div>
+<div class="overflow-hidden">
+<p class="text-on-surface font-label-md truncate">Operator 042</p>
+<p class="text-on-surface-variant text-[10px] uppercase">Tier 1 Access</p>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="h-14 fixed top-0 right-0 left-[240px] z-40 border-b border-outline-variant bg-surface-bg flex items-center justify-between px-margin-edge">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight">Command Console</span>
+<nav class="flex gap-6">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Local Mode</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Static View</a>
+<!-- Active Link -->
+<a class="font-label-caps text-label-caps text-status-success font-bold border-b-2 border-status-success transition-opacity" href="#">Live Truth</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<input class="bg-surface-bg border border-outline-variant rounded-sm px-3 py-1 text-label-md w-64 focus:border-secondary outline-none transition-all" placeholder="Search operational logs..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-on-surface-variant text-sm">search</span>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined">security</span></button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined">help</span></button>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant mx-2"></div>
+<button class="bg-primary text-on-primary px-4 py-1.5 font-label-caps text-label-caps hover:opacity-90 active:opacity-80 transition-all">Execute Gate</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-[240px] mt-14 mr-[380px] p-margin-edge h-[calc(100vh-3.5rem)] overflow-y-auto custom-scrollbar">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-status-success bg-status-success/10 px-2 py-0.5 rounded-sm font-mono-data text-[10px] uppercase">Lane: Active</span>
+<span class="text-on-surface-variant font-mono-data text-[10px] uppercase tracking-widest">Protocol 9.4-B</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Background Tasks Summary</h2>
+<div class="mt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-caps text-label-caps text-tertiary">Automations Rationale Available</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<p class="font-mono-data text-mono-data text-on-surface-variant mb-1">System Freshness Index</p>
+<div class="flex gap-1">
+<div class="w-8 h-2 bg-status-success"></div>
+<div class="w-8 h-2 bg-status-success"></div>
+<div class="w-8 h-2 bg-status-success"></div>
+<div class="w-8 h-2 bg-status-warning"></div>
+<div class="w-8 h-2 bg-surface-mid"></div>
+</div>
+<p class="font-mono-data text-mono-data text-status-warning mt-1">72% - Freshness Risk Detected</p>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter-normal">
+<!-- Automation Health Card (Wide) -->
+<div class="col-span-8 bg-surface-low border border-outline-variant p-panel-padding flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-label-caps text-label-caps text-on-surface">Active Background Cycles</h3>
+<span class="material-symbols-outlined text-on-surface-variant">sync</span>
+</div>
+<div class="grid grid-cols-4 gap-gutter-compact flex-1">
+<div class="bg-surface-bg border border-outline-variant p-3 flex flex-col justify-between">
+<span class="font-mono-data text-[10px] text-on-surface-variant uppercase">Index Cleanup</span>
+<div class="mt-4">
+<p class="text-headline-md font-mono-data">99.8%</p>
+<div class="w-full h-1 bg-surface-mid mt-1 rounded-full overflow-hidden">
+<div class="h-full bg-status-success w-[99%]"></div>
+</div>
+</div>
+</div>
+<div class="bg-surface-bg border border-outline-variant p-3 flex flex-col justify-between">
+<span class="font-mono-data text-[10px] text-on-surface-variant uppercase">Memory Swap</span>
+<div class="mt-4">
+<p class="text-headline-md font-mono-data">42.1%</p>
+<div class="w-full h-1 bg-surface-mid mt-1 rounded-full overflow-hidden">
+<div class="h-full bg-status-info w-[42%]"></div>
+</div>
+</div>
+</div>
+<div class="bg-surface-bg border border-outline-variant p-3 flex flex-col justify-between">
+<span class="font-mono-data text-[10px] text-on-surface-variant uppercase">Audit Logs</span>
+<div class="mt-4">
+<p class="text-headline-md font-mono-data">12ms</p>
+<p class="text-[10px] text-status-success">Latency: Nominal</p>
+</div>
+</div>
+<div class="bg-surface-bg border border-outline-variant p-3 flex flex-col justify-between border-l-status-warning border-l-2">
+<span class="font-mono-data text-[10px] text-status-warning uppercase">Sync Delta</span>
+<div class="mt-4">
+<p class="text-headline-md font-mono-data text-status-warning">ERR-7</p>
+<p class="text-[10px] text-on-surface-variant">Queue: 1.2k items</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Freshness Risk Alert (Tall) -->
+<div class="col-span-4 bg-surface-low border border-outline-variant p-panel-padding flex flex-col border-t-status-danger border-t-2">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-status-danger">warning</span>
+<h3 class="font-label-caps text-label-caps text-on-surface">Freshness Risks</h3>
+</div>
+<div class="space-y-4 flex-1">
+<div class="border-b border-outline-variant pb-3">
+<p class="font-mono-data text-mono-data text-on-surface">Asset Metadata Lag</p>
+<p class="text-body-md text-on-surface-variant mt-1 leading-tight">Historical evidence sync is delayed by 142 minutes. Automated re-index required.</p>
+</div>
+<div class="border-b border-outline-variant pb-3">
+<p class="font-mono-data text-mono-data text-on-surface">Permission Cascade</p>
+<p class="text-body-md text-on-surface-variant mt-1 leading-tight">Global ACL refresh failed at 04:00 UTC. Using cached local mode.</p>
+</div>
+<button class="w-full py-2 border border-status-danger text-status-danger font-label-caps text-label-caps hover:bg-status-danger/5 transition-colors mt-2">Force Revalidation</button>
+</div>
+</div>
+<!-- Processing Queues (Asymmetric) -->
+<div class="col-span-12 bg-surface-low border border-outline-variant">
+<div class="p-panel-padding border-b border-outline-variant flex justify-between items-center bg-surface-mid/30">
+<h3 class="font-label-caps text-label-caps text-on-surface">Processing Queues</h3>
+<div class="flex gap-4">
+<span class="font-mono-data text-mono-data text-on-surface-variant">Live Streams: <span class="text-status-success">4</span></span>
+<span class="font-mono-data text-mono-data text-on-surface-variant">Batch: <span class="text-on-surface">12</span></span>
+</div>
+</div>
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-bg/50">
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant">Task Identity</th>
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant">Priority</th>
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant">Operator Status</th>
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant">Progress</th>
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-mono-data text-mono-data">
+<tr class="border-b border-outline-variant hover:bg-surface-mid transition-colors">
+<td class="p-4">ENC_SHA_256_VERIFY</td>
+<td class="p-4 text-status-info">HIGH</td>
+<td class="p-4"><span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-status-success"></div> Processing</span></td>
+<td class="p-4">84%</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">visibility</span></button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-mid transition-colors">
+<td class="p-4">DB_COMPACTION_S04</td>
+<td class="p-4 text-on-surface-variant">LOW</td>
+<td class="p-4"><span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-status-pending"></div> Queued</span></td>
+<td class="p-4">0%</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">play_arrow</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-mid transition-colors">
+<td class="p-4 text-status-warning">DATA_SCRUB_VOID</td>
+<td class="p-4 text-status-danger">CRITICAL</td>
+<td class="p-4"><span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-status-warning"></div> Retrying</span></td>
+<td class="p-4">12%</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">terminal</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Visual Data Visualization -->
+<div class="col-span-6 h-48 bg-surface-low border border-outline-variant relative overflow-hidden">
+<div class="absolute inset-0 opacity-20 pointer-events-none" id="grid-pattern"></div>
+<div class="p-panel-padding relative z-10">
+<p class="font-label-caps text-label-caps text-on-surface mb-2">Throughput Volatility</p>
+<div class="flex items-end gap-1 h-24">
+<div class="flex-1 bg-secondary/40 h-[20%]"></div>
+<div class="flex-1 bg-secondary/40 h-[45%]"></div>
+<div class="flex-1 bg-secondary/40 h-[30%]"></div>
+<div class="flex-1 bg-secondary h-[90%]"></div>
+<div class="flex-1 bg-secondary/40 h-[60%]"></div>
+<div class="flex-1 bg-secondary/40 h-[40%]"></div>
+<div class="flex-1 bg-secondary/40 h-[75%]"></div>
+<div class="flex-1 bg-secondary/40 h-[55%]"></div>
+<div class="flex-1 bg-secondary/40 h-[45%]"></div>
+<div class="flex-1 bg-status-warning h-[100%] animate-pulse"></div>
+</div>
+<div class="mt-4 flex justify-between">
+<span class="text-[10px] font-mono-data text-on-surface-variant">00:00 UTC</span>
+<span class="text-[10px] font-mono-data text-status-warning">SPIKE DETECTED</span>
+<span class="text-[10px] font-mono-data text-on-surface-variant">CURRENT</span>
+</div>
+</div>
+</div>
+<!-- Command Gate Component -->
+<div class="col-span-6 bg-surface-low border border-outline-variant p-panel-padding flex flex-col justify-between">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface mb-4">Manual Override Gate</h3>
+<div class="flex items-center justify-between p-3 bg-surface-bg border border-outline-variant mb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">lock</span>
+<span class="font-body-md text-body-md">Operator Prepare Mode</span>
+</div>
+<input class="form-checkbox bg-surface-low border-outline text-secondary focus:ring-secondary rounded-sm w-5 h-5" type="checkbox"/>
+</div>
+<p class="text-[11px] text-on-surface-variant uppercase tracking-tighter mb-4">Permission Required: Tier 1 Security Clearance</p>
+</div>
+<div class="flex gap-gutter-normal">
+<button class="flex-1 py-2 border border-outline-variant text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-mid">Prepare</button>
+<button class="flex-1 py-2 bg-status-pending text-on-surface opacity-50 cursor-not-allowed font-label-caps text-label-caps">Execute Gate</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual Drawer (Right) -->
+<aside class="w-[380px] h-full fixed right-0 top-0 z-30 border-l border-outline-variant bg-surface-container-low flex flex-col pt-14 shadow-sm">
+<div class="px-gutter-normal py-6 border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">Contextual Reference</span>
+<h2 class="font-headline-md text-headline-md font-semibold text-on-surface">Evidence Vault</h2>
+<p class="text-on-surface-variant text-[12px] font-mono-data">ID: 0x8FA4...C21</p>
+</div>
+<nav class="flex border-b border-outline-variant">
+<button class="flex-1 py-3 text-secondary font-bold font-mono-data text-mono-data border-b-2 border-secondary bg-surface-mid/20 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="fact_check">fact_check</span>
+                Evidence
+            </button>
+<button class="flex-1 py-3 text-outline font-mono-data text-mono-data hover:bg-surface-mid transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="history_edu">history_edu</span>
+                Audit
+            </button>
+<button class="flex-1 py-3 text-outline font-mono-data text-mono-data hover:bg-surface-mid transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="gavel">gavel</span>
+                Reviews
+            </button>
+</nav>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-gutter-normal space-y-gutter-normal">
+<!-- Documentation Card -->
+<div class="bg-surface-low border border-outline-variant p-4">
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] font-mono-data text-tertiary px-1 bg-tertiary/10 border border-tertiary/20">DOC_772</span>
+<span class="text-[10px] font-mono-data text-on-surface-variant">2023-11-24</span>
+</div>
+<h4 class="font-label-caps text-label-caps text-on-surface mb-2">Automation Rationale</h4>
+<p class="text-body-md text-on-surface-variant leading-relaxed mb-4">
+                    Background task lane operates under the "Stability Protocol". Cleanup tasks are prioritized to prevent memory leaks in Station 04. Any delta spike above 5% triggers the Freshness Risk warning.
+                </p>
+<div class="aspect-video bg-surface-bg border border-outline-variant relative overflow-hidden group cursor-zoom-in">
+<img alt="Data Flow Chart" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A complex architectural diagram of a data processing pipeline, rendered in a technical, minimalist style. The chart uses glowing thin lines in shades of deep blue and emerald green to represent data flows. The background is a dark, matte slate, giving it a sophisticated and professional look consistent with a high-end command center interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkpRykr6b9u49ULelydRMJy98eEd_2oERexzpRvNOEGNpZfXI1tDreyB14aPvrPHP_4tYwx9V2Ure4F0pjCSIDKN_olWfYiwe0Gc39-hOWZzxJp4NuokKctg3LxoSYQ_ZxjkIOA7MiyZaGDp4gaNIMIzBzf42ewIVQhUmmtrxoRiCKOlAW4zHbunlwYdZv31hqRS5LuoubZhMk_PjlwNo4oG690mC0AqaUtkcnRbkqhuiMNbi8yOORM-ODJMlNStXhFUP_iH5jsQ"/>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-surface/40 transition-opacity">
+<span class="material-symbols-outlined text-on-surface">zoom_in</span>
+</div>
+</div>
+</div>
+<!-- Historical Blockers -->
+<div class="space-y-3">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant">Resolved Blockers (24h)</h4>
+<div class="p-3 border-l-2 border-status-success bg-surface-low flex gap-3">
+<span class="material-symbols-outlined text-status-success text-sm">check_circle</span>
+<div>
+<p class="font-mono-data text-[12px] text-on-surface">Memory Leak Fix</p>
+<p class="text-[11px] text-on-surface-variant">Lane 02 recovered at 14:00 UTC</p>
+</div>
+</div>
+<div class="p-3 border-l-2 border-status-success bg-surface-low flex gap-3">
+<span class="material-symbols-outlined text-status-success text-sm">check_circle</span>
+<div>
+<p class="font-mono-data text-[12px] text-on-surface">API Handshake Resolved</p>
+<p class="text-[11px] text-on-surface-variant">Evidence sync back online</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-gutter-normal border-t border-outline-variant bg-surface-bg">
+<button class="w-full py-2 bg-secondary text-on-secondary font-label-caps text-label-caps hover:bg-secondary-container transition-colors">Export Evidence Log</button>
+</div>
+</aside>
+<script>
+        // Micro-interaction for throughput spikes
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.flex-1.bg-secondary\\/40, .flex-1.bg-secondary');
+            bars.forEach(bar => {
+                bar.addEventListener('mouseover', () => {
+                    bar.classList.add('scale-y-110');
+                    bar.style.transition = 'transform 0.1s ease';
+                });
+                bar.addEventListener('mouseout', () => {
+                    bar.classList.remove('scale-y-110');
+                });
+            });
+
+            // Subtle background grid effect
+            const grid = document.getElementById('grid-pattern');
+            if (grid) {
+                grid.style.backgroundImage = `radial-gradient(circle, #334155 1px, transparent 1px)`;
+                grid.style.backgroundSize = '20px 20px';
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Command Console - Lane Summary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #45464d;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #909097;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 8px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#957d5a",
+                      "inverse-primary": "#565e74",
+                      "on-primary": "#283044",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-primary-fixed": "#131b2e",
+                      "surface-high": "#334155",
+                      "on-error-container": "#ffdad6",
+                      "status-pending": "#64748B",
+                      "primary-fixed": "#dae2fd",
+                      "outline": "#909097",
+                      "secondary": "#7bd0ff",
+                      "status-info": "#0EA5E9",
+                      "surface-bright": "#2c3a4c",
+                      "on-secondary-fixed-variant": "#004c69",
+                      "tertiary-fixed-dim": "#dec29a",
+                      "surface-container-low": "#0d1c2d",
+                      "surface-tint": "#bec6e0",
+                      "surface": "#051424",
+                      "on-surface-variant": "#c6c6cd",
+                      "tertiary-container": "#231500",
+                      "secondary-container": "#00a6e0",
+                      "secondary-fixed": "#c4e7ff",
+                      "on-secondary-fixed": "#001e2c",
+                      "on-secondary-container": "#00374d",
+                      "tertiary": "#dec29a",
+                      "surface-container-lowest": "#010f1f",
+                      "status-danger": "#EF4444",
+                      "status-warning": "#F59E0B",
+                      "inverse-surface": "#d4e4fa",
+                      "error-container": "#93000a",
+                      "secondary-fixed-dim": "#7bd0ff",
+                      "on-background": "#d4e4fa",
+                      "inverse-on-surface": "#233143",
+                      "background": "#051424",
+                      "on-tertiary-fixed-variant": "#574425",
+                      "surface-container": "#122131",
+                      "on-primary-container": "#798098",
+                      "outline-variant": "#45464d",
+                      "on-secondary": "#00354a",
+                      "surface-container-high": "#1c2b3c",
+                      "on-tertiary": "#3e2d11",
+                      "surface-bg": "#020617",
+                      "on-surface": "#d4e4fa",
+                      "tertiary-fixed": "#fcdeb5",
+                      "surface-low": "#0F172A",
+                      "status-success": "#10B981",
+                      "primary": "#bec6e0",
+                      "surface-variant": "#273647",
+                      "primary-container": "#0f172a",
+                      "error": "#ffb4ab",
+                      "surface-container-highest": "#273647",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed": "#271901",
+                      "primary-fixed-dim": "#bec6e0",
+                      "surface-dim": "#051424",
+                      "surface-mid": "#1E293B"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-edge": "24px",
+                      "gutter-compact": "8px",
+                      "panel-padding": "12px",
+                      "unit": "4px",
+                      "gutter-normal": "16px"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "mono-data": ["JetBrains Mono"],
+                      "headline-md": ["Inter"]
+              },
+              "fontSize": {
+                      "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden">
+<!-- SideNavBar (Primary) -->
+<nav class="bg-surface-low border-r border-outline-variant w-[240px] h-full fixed left-0 top-0 flex flex-col py-panel-padding z-50">
+<div class="px-gutter-normal mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">System Operator</h1>
+<p class="font-label-md text-on-surface-variant opacity-60">Station 04 - Secure</p>
+</div>
+<div class="flex-1 space-y-unit">
+<a class="flex items-center px-gutter-normal py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Overview</span>
+</a>
+<a class="flex items-center px-gutter-normal py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="event_upcoming">event_upcoming</span>
+<span class="font-body-md">Today</span>
+</a>
+<a class="bg-surface-high text-primary border-l-2 border-primary flex items-center px-gutter-normal py-2 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="lanes">cases</span>
+<span class="font-body-md font-semibold">Lanes</span>
+</a>
+<a class="flex items-center px-gutter-normal py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="block_external">lock_open</span>
+<span class="font-body-md">Blockers</span>
+</a>
+<a class="flex items-center px-gutter-normal py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-md">Evidence/Archive</span>
+</a>
+<a class="flex items-center px-gutter-normal py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="lock_open">lock_open</span>
+<span class="font-body-md">Permissions</span>
+</a>
+<a class="flex items-center px-gutter-normal py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-mid transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</div>
+<div class="px-gutter-normal mt-auto flex items-center gap-3 pt-4 border-t border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-surface-mid flex items-center justify-center overflow-hidden">
+<img alt="Operator Profile" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ9WyjraXAm5Hoy4K6m8_bHXqMCoWmv0AE4YalV5YjNU-nHPRtn2Nf0lxDyT7iec_yZxziNNCE8eNqao_eyMfv73in57Xn11IL2DWc96pKZACAL8xZRs5qX0oAA2qlYRCrY62tCnSghk7iK-uGA0EcKZlHJPESV-T1TmYaM3OlX2U88PgULDP3SnmY1yXfpEjCcg8vRdamVDoY7pkOLMDb1ZvZIbG6e5471rNPqNFM8sGBKpSDKDYwtY-X6_J8Y-Iy0OY3rCJDoQ"/>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface">OP-04</p>
+<span class="inline-block w-2 h-2 rounded-full bg-status-success animate-pulse"></span>
+<span class="font-mono-data text-[10px] text-status-success uppercase">Active Session</span>
+</div>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="h-14 fixed top-0 right-0 left-[240px] z-40 bg-surface-bg border-b border-outline-variant flex items-center justify-between px-margin-edge">
+<div class="flex items-center gap-8">
+<h2 class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight">Command Console</h2>
+<nav class="flex gap-6">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Local Mode</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Static View</a>
+<a class="font-label-caps text-label-caps text-status-success font-bold border-b-2 border-status-success pb-1" href="#">Live Truth</a>
+</nav>
+</div>
+<div class="flex items-center gap-gutter-normal">
+<div class="relative">
+<input class="bg-surface-container-low border border-outline-variant rounded-lg px-4 py-1 text-label-md w-64 focus:outline-none focus:border-secondary transition-all" placeholder="Search operational data..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-on-surface-variant text-sm">search</span>
+</div>
+<div class="flex gap-3 px-4 border-x border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-on-surface" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-on-surface" data-icon="security">security</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-on-surface" data-icon="help">help</span>
+</div>
+<button class="bg-surface-mid border border-outline-variant px-3 py-1 rounded text-label-caps hover:bg-surface-high">Prepare</button>
+<button class="bg-primary text-on-primary px-3 py-1 rounded text-label-caps font-bold hover:opacity-90">Execute Gate</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[240px] mr-[380px] mt-14 p-gutter-normal h-[calc(100vh-56px)] overflow-y-auto">
+<!-- Lane Header -->
+<div class="flex items-center justify-between mb-gutter-normal">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-secondary material-symbols-outlined" data-icon="groups">groups</span>
+<h3 class="font-headline-lg text-headline-lg">Creative / Peer Review</h3>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-mono-data text-label-caps text-on-tertiary-container bg-tertiary-container/30 px-2 py-0.5 rounded">LANE_ID: PR-X49</span>
+<span class="text-on-surface-variant font-label-md flex items-center">
+<span class="material-symbols-outlined text-sm mr-1">history</span> Last synced: 14:02:11
+                    </span>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="bg-surface-low border border-outline-variant p-2 rounded text-center min-w-[80px]">
+<p class="font-label-caps text-[10px] text-outline">QUEUE</p>
+<p class="font-headline-md text-primary">12</p>
+</div>
+<div class="bg-surface-low border border-outline-variant p-2 rounded text-center min-w-[80px]">
+<p class="font-label-caps text-[10px] text-outline">BLOCKERS</p>
+<p class="font-headline-md text-status-danger">02</p>
+</div>
+<div class="bg-surface-low border border-outline-variant p-2 rounded text-center min-w-[80px]">
+<p class="font-label-caps text-[10px] text-outline">PENDING</p>
+<p class="font-headline-md text-status-warning">05</p>
+</div>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="bento-grid">
+<!-- Collaboration Status Module -->
+<section class="col-span-8 bg-surface-low border border-outline-variant rounded-lg p-panel-padding overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant">Active Collaboration Streams</h4>
+<span class="font-mono-data text-[11px] text-status-success flex items-center">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success mr-2"></span> STREAM_SYNC: NOMINAL
+                    </span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Stream 1 -->
+<div class="bg-surface-bg border-l-4 border-secondary p-3 rounded">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-secondary">Asset Manifest A</span>
+<span class="text-[10px] font-mono-data bg-surface-high px-1.5 py-0.5">LOCAL PEER DRAFT</span>
+</div>
+<p class="font-body-md mb-3 line-clamp-1">Revision of 'Vector_Core_Z' alignment assets.</p>
+<div class="flex items-center -space-x-2">
+<img alt="Peer 1" class="w-6 h-6 rounded-full border border-surface-bg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWg1GP0nfiNrribmtoFlr6nXcsa4kFXJr5VyKvPRWG1Lf9WoUehOOv-CTniX2UuVvLAd9to4eb2sE50raudxd6HQF5GuaWtKMbQ8yNKEs08tSGk7uLrFKWRSL3I1uBfgehuxNA61jQug9tf4ee1ly3M1sufCRMpaXPQxANA-9cjbRCql1SjmEC1k5PXZSJM28TWOVg4vsIWTEIz1oYJ351a-OZzEgpgOfTEsTiZs7rc0Y3zashXy9GWa3jo7Lu9fn03F4-mbMxww"/>
+<img alt="Peer 2" class="w-6 h-6 rounded-full border border-surface-bg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs3warBiVB3dD6__shMXzHlmBIC7HIuVD1qaRcNZfjH5YH0ZZ3C-bLffR6JNYz0vSHNOI6K-enJpPDwUl03XTgz7Ds7VgMBoj3lY9Szp5r2pXvwHGyrNBqECvOXBt-NK9FYKVYpAkes0fCfso1hfkzztcLvNhV8doeQTOs-i9JhVzqHG5xWjYxIsEGCXfRhNGZVuN1Nu9e33Q7ov4uCvnYH5R_ShZN4A9G8K_NgrwBCM9Jh6meurFmtZ7UjAMttVJY7RXkmDzmGA"/>
+<div class="w-6 h-6 rounded-full bg-surface-mid border border-surface-bg flex items-center justify-center text-[10px]">+3</div>
+<span class="ml-4 font-mono-data text-[11px] text-on-surface-variant">42% Finalized</span>
+</div>
+</div>
+<!-- Stream 2 -->
+<div class="bg-surface-bg border-l-4 border-status-warning p-3 rounded opacity-80">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-status-warning">UI Framework Delta</span>
+<span class="text-[10px] font-mono-data bg-surface-high px-1.5 py-0.5">LOCAL PEER DRAFT</span>
+</div>
+<p class="font-body-md mb-3 line-clamp-1">Review of color tokens in High Contrast mode.</p>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-status-warning text-sm mr-2" data-icon="warning">warning</span>
+<span class="font-mono-data text-[11px] text-on-surface-variant">Conflicts Detected (3)</span>
+</div>
+</div>
+</div>
+<!-- Review Timeline -->
+<div class="mt-6">
+<h5 class="font-label-caps text-[10px] text-outline mb-2">THROUGHPUT TREND (24H)</h5>
+<div class="h-16 flex items-end gap-1 px-1">
+<div class="flex-1 bg-primary/20 h-[30%] hover:bg-primary transition-all rounded-t"></div>
+<div class="flex-1 bg-primary/20 h-[45%] hover:bg-primary transition-all rounded-t"></div>
+<div class="flex-1 bg-primary/20 h-[60%] hover:bg-primary transition-all rounded-t"></div>
+<div class="flex-1 bg-status-success h-[90%] hover:bg-status-success transition-all rounded-t"></div>
+<div class="flex-1 bg-primary/20 h-[40%] hover:bg-primary transition-all rounded-t"></div>
+<div class="flex-1 bg-primary/20 h-[35%] hover:bg-primary transition-all rounded-t"></div>
+<div class="flex-1 bg-status-danger h-[20%] hover:bg-status-danger transition-all rounded-t"></div>
+<div class="flex-1 bg-primary/20 h-[50%] hover:bg-primary transition-all rounded-t"></div>
+</div>
+</div>
+</section>
+<!-- Awaiting Review Actions -->
+<section class="col-span-4 bg-surface-low border border-outline-variant rounded-lg p-panel-padding">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-4">Awaiting Review</h4>
+<div class="space-y-gutter-compact">
+<!-- Action Card 1 -->
+<div class="bg-surface-mid/50 border border-outline-variant p-3 rounded group cursor-pointer hover:border-secondary transition-all">
+<div class="flex justify-between items-center mb-1">
+<span class="font-body-md font-semibold text-secondary">Verify Audit Trail</span>
+<span class="material-symbols-outlined text-sm text-outline group-hover:text-secondary transition-colors" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<p class="font-label-md text-on-surface-variant mb-2">3 pending entries in Station 04</p>
+<div class="flex gap-2">
+<button class="flex-1 font-label-caps text-[10px] bg-status-success/20 text-status-success border border-status-success/40 py-1 rounded hover:bg-status-success hover:text-on-primary">APPROVE</button>
+<button class="flex-1 font-label-caps text-[10px] bg-status-danger/20 text-status-danger border border-status-danger/40 py-1 rounded hover:bg-status-danger hover:text-on-primary">REJECT</button>
+</div>
+</div>
+<!-- Action Card 2 -->
+<div class="bg-surface-mid/50 border border-outline-variant p-3 rounded group cursor-pointer hover:border-secondary transition-all">
+<div class="flex justify-between items-center mb-1">
+<span class="font-body-md font-semibold text-primary">Metadata Validation</span>
+<span class="material-symbols-outlined text-sm text-outline group-hover:text-secondary transition-colors" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<p class="font-label-md text-on-surface-variant mb-2">Peer review required for ID: #9822</p>
+<button class="w-full font-label-caps text-[10px] bg-surface-high border border-outline-variant py-1 rounded hover:bg-secondary hover:text-on-secondary">BEGIN REVIEW</button>
+</div>
+</div>
+</section>
+<!-- Detailed Queue Table -->
+<section class="col-span-12 bg-surface-low border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-mid px-gutter-normal py-2 flex justify-between items-center">
+<h4 class="font-label-caps text-label-caps text-on-surface">Lane Queue Details</h4>
+<div class="flex gap-4">
+<span class="font-mono-data text-[11px] text-outline">TOTAL_RECORDS: 1,402</span>
+<span class="font-mono-data text-[11px] text-secondary">ACTIVE_SESSIONS: 4</span>
+</div>
+</div>
+<table class="w-full text-left font-body-md">
+<thead class="bg-surface-bg border-b border-outline-variant text-outline uppercase text-[10px] font-label-caps">
+<tr>
+<th class="px-4 py-2">ID</th>
+<th class="px-4 py-2">Entity Name</th>
+<th class="px-4 py-2">Operator</th>
+<th class="px-4 py-2">Status</th>
+<th class="px-4 py-2">Reviewer Weight</th>
+<th class="px-4 py-2">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-mid transition-colors cursor-default group">
+<td class="px-4 py-3 font-mono-data text-secondary">#XF-902</td>
+<td class="px-4 py-3 font-semibold">Core_Auth_Schema</td>
+<td class="px-4 py-3 text-on-surface-variant">Operator_Smith</td>
+<td class="px-4 py-3">
+<span class="bg-status-success/10 text-status-success border border-status-success/30 px-2 py-0.5 rounded text-[11px] font-mono-data">READY</span>
+</td>
+<td class="px-4 py-3">
+<div class="w-full bg-surface-high h-1 rounded overflow-hidden">
+<div class="bg-secondary h-full w-[80%]"></div>
+</div>
+</td>
+<td class="px-4 py-3">
+<span class="material-symbols-outlined text-outline group-hover:text-secondary cursor-pointer" data-icon="open_in_new">open_in_new</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-mid transition-colors cursor-default group">
+<td class="px-4 py-3 font-mono-data text-secondary">#XF-903</td>
+<td class="px-4 py-3 font-semibold">Asset_Library_V4</td>
+<td class="px-4 py-3 text-on-surface-variant">Operator_Joon</td>
+<td class="px-4 py-3">
+<span class="bg-status-warning/10 text-status-warning border border-status-warning/30 px-2 py-0.5 rounded text-[11px] font-mono-data">REVIEWING</span>
+</td>
+<td class="px-4 py-3">
+<div class="w-full bg-surface-high h-1 rounded overflow-hidden">
+<div class="bg-status-warning h-full w-[45%]"></div>
+</div>
+</td>
+<td class="px-4 py-3">
+<span class="material-symbols-outlined text-outline group-hover:text-secondary cursor-pointer" data-icon="open_in_new">open_in_new</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-mid transition-colors cursor-default group">
+<td class="px-4 py-3 font-mono-data text-secondary">#XF-904</td>
+<td class="px-4 py-3 font-semibold">Logistics_Array_01</td>
+<td class="px-4 py-3 text-on-surface-variant">Operator_X</td>
+<td class="px-4 py-3">
+<span class="bg-status-pending/10 text-status-pending border border-status-pending/30 px-2 py-0.5 rounded text-[11px] font-mono-data">QUEUED</span>
+</td>
+<td class="px-4 py-3">
+<div class="w-full bg-surface-high h-1 rounded overflow-hidden">
+<div class="bg-status-pending h-full w-[10%]"></div>
+</div>
+</td>
+<td class="px-4 py-3">
+<span class="material-symbols-outlined text-outline group-hover:text-secondary cursor-pointer" data-icon="open_in_new">open_in_new</span>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+</main>
+<!-- SideNavBar (Contextual Drawer) -->
+<aside class="bg-surface-container-low border-l border-outline-variant w-[380px] h-full fixed right-0 top-0 z-30 flex flex-col pt-14 shadow-sm">
+<!-- Header -->
+<div class="px-panel-padding py-4 border-b border-outline-variant">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-1">Evidence Vault</h4>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-mid flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="fact_check">fact_check</span>
+</div>
+<div>
+<h5 class="font-body-md font-bold text-on-surface">Review History</h5>
+<p class="font-mono-data text-[11px] text-outline">STATION_04_AUDIT_LOG</p>
+</div>
+</div>
+</div>
+<!-- Evidence Navigation -->
+<nav class="flex px-panel-padding gap-4 border-b border-outline-variant">
+<button class="font-mono-data text-mono-data text-secondary font-bold border-b-2 border-secondary py-2">Evidence</button>
+<button class="font-mono-data text-mono-data text-outline hover:text-on-surface py-2">Audit</button>
+<button class="font-mono-data text-mono-data text-outline hover:text-on-surface py-2">Reviews</button>
+</nav>
+<!-- Scrollable Evidence Area -->
+<div class="flex-1 overflow-y-auto p-panel-padding space-y-gutter-normal">
+<div class="space-y-4">
+<h6 class="font-label-caps text-[10px] text-outline tracking-widest">LATEST CAPTURES</h6>
+<!-- Evidence Item -->
+<div class="bg-surface-bg border border-outline-variant p-3 rounded group cursor-pointer hover:bg-surface-mid transition-all">
+<div class="flex justify-between items-start mb-2">
+<span class="font-mono-data text-[11px] text-secondary">IMG_CAP_0492</span>
+<span class="font-mono-data text-[10px] text-outline">13:42:01</span>
+</div>
+<div class="aspect-video bg-surface-high mb-2 overflow-hidden rounded">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A professional high-tech digital control room interior with multiple monitors displaying complex data visualizations and circuit diagrams. The environment is darkly lit with neon cyan and electric blue accent lights reflecting off sleek, metallic surfaces. The atmosphere is one of extreme cybersecurity and technical precision in a modern corporate command center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5sTLSWvecElN8ADD-ND-YSEfbdCsT5XZgEVpe6W9GpZ0OyU675tkp_gfqqbVW6cDKa6IeTrkl235hAX5D4jQ7f-qQDN41WrxpQBUZunksUtxMjSJiIVQZbnr__xcAwtr0MjPvmdmytk0yKr-MMeWR_yv-MSCcQJ6m5Vp4f9Y2fLDQBpw7hIYkYw8Pve3VgKREtI0TZrWT9Fn7qvyo1TdGAPpU3is8CJUiLkP88sWBcxUzAbDgqq238M3PuH-VgMVy-ytbJi2Iqw"/>
+</div>
+<p class="font-label-md text-on-surface-variant">Capture of conflict state in Delta_Node sequence.</p>
+</div>
+<!-- Peer Feedback Indicator -->
+<div class="bg-surface-bg border border-outline-variant p-3 rounded">
+<h6 class="font-label-caps text-[10px] text-tertiary mb-3">PEER FEEDBACK THREAD</h6>
+<div class="space-y-3">
+<div class="flex gap-3">
+<div class="w-6 h-6 rounded bg-tertiary/20 flex-shrink-0"></div>
+<div>
+<p class="font-label-md text-on-surface">"The schema needs more entropy padding."</p>
+<span class="font-mono-data text-[10px] text-outline">— Op_X, 10m ago</span>
+</div>
+</div>
+<div class="flex gap-3 border-l border-outline-variant ml-3 pl-3">
+<div class="w-6 h-6 rounded bg-secondary/20 flex-shrink-0"></div>
+<div>
+<p class="font-label-md text-on-surface">"Agreed. Scaling factor adjusted in Local Peer Draft."</p>
+<span class="font-mono-data text-[10px] text-outline">— You, 2m ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-panel-padding bg-surface-container-low border-t border-outline-variant">
+<button class="w-full bg-secondary text-on-secondary font-label-caps py-2 rounded font-bold hover:opacity-90 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">archive</span>
+                ARCHIVE CURRENT STATE
+            </button>
+</div>
+</aside>
+<script>
+        // Micro-interactions for hover effects and active session simulation
+        document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                icon.style.fontVariationSettings = "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24";
+            });
+            icon.addEventListener('mouseleave', () => {
+                icon.style.fontVariationSettings = "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24";
+            });
+        });
+
+        // Simulating updating data
+        setInterval(() => {
+            const lastSynced = document.querySelector('span:has(.material-symbols-outlined)');
+            if (lastSynced) {
+                const now = new Date();
+                const timeStr = now.getHours().toString().padStart(2, '0') + ":" + 
+                              now.getMinutes().toString().padStart(2, '0') + ":" + 
+                              now.getSeconds().toString().padStart(2, '0');
+                // update hidden logic or visual subtle flash
+            }
+        }, 5000);
+    </script>
+</body></html>

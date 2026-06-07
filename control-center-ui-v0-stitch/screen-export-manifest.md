@@ -1,0 +1,26 @@
+# Screen Export Manifest
+
+Use this manifest to decide what to capture locally before uploading controlled batches to v0 or Stitch. Export screenshots and context in small groups; do not upload secrets, credentials, client data, private source notes, or misleading live/execution claims.
+
+| Surface | Current route/component if known | Purpose | Primary user question | Export priority | Upload target | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Today/default dashboard | `activeLaneId === "today"` in `src/App.tsx`; `OperatorSummaryPanel`, `OperatingCockpitNavigator`, `OperatorCockpitDashboardPanel`; shell via `AppShell`, `TopStatusBar`, `OperatingLaneTopNav` | Default operating cockpit for daily posture and attention. | What matters today and where should I look first? | P0 | v0 + Stitch | Capture first. Include top status and lane nav, but avoid exposing private operator passphrase state. |
+| Lane Summary | `OperatingLaneTopNav`, `OperatingCockpitNavigator`, `dailyOperatingLanes.fixture.ts` | Show each operating lane's posture, reviewable work, blockers, next safe action, and evidence link. | What is the current state of this lane? | P0 | v0 + Stitch | Capture Today plus one non-Today lane such as Governance or Design / Territory. |
+| Current status | `TopStatusBar`, `OperatingStatusCockpit`, `OperatorSummaryPanel` | Show mode, permission posture, current pass, next gate, and no-autonomy boundaries. | Is the cockpit safe, local/private, and current enough to inspect? | P0 | v0 + Stitch | Useful for AppShell generation. Keep governance copy visible but do not let it dominate every batch. |
+| Active blockers | `BlockedActionsPanel`, blocker sections in `DailyPriorityAlertsPanel`, lane `blockedGated` fields | Separate blocked or not-true claims from normal work. | What is blocked, forbidden, stale, or not true? | P0 | v0 + Stitch | Capture separately from Archive / Evidence so historical blocked evidence is not confused with active blockers. |
+| Next actions | `PrepareActionQueuePanel`, `DailyPriorityAlertsPanel`, `OperatingCockpitNavigator` next-safe-action fields | Show reviewable draft actions and next safe operator steps. | What can I prepare or review next? | P0 | v0 | Keep Prepare distinct from approval/execution. |
+| Archive / Evidence | `activeLaneId === "archive-evidence"`; `DetailGroup` ids `archive-evidence-reference`, `workbench-review-reference`, `evidence-governance-reference`; `EvidenceGovernancePanel` | Keep provenance, historical records, audit context, and detailed reports available as secondary material. | What evidence supports this and what is only historical? | P1 | v0 + Stitch | Capture as secondary surface, not default dashboard. |
+| Freshness / source semantics | `SnapshotModeBanner`, `BackendCockpitRecordsPanel`, `automationsSourceFreshnessLedger.fixture.ts` | Explain fixture, local API fallback, imported references, and current-truth promotion rules. | Is this rationale, evidence, fixture data, local API data, or current truth? | P1 | v0 + Stitch | Preserve rule: Automations rationale is available; freshness review is required only for current-truth promotion. |
+| Local API mode | `BackendCockpitRecordsPanel`, `LocalControlPlaneStatusPanel`, `OperatingModePanel`, private operator gate in `App.tsx` | Show local/private read or operating posture without implying external/live authority. | Is data local/static/generated/live-read, and is the control plane available? | P1 | v0 | Label local API as localhost/read-only unless an implemented protected route says otherwise. |
+| Permissioned command / permissions | `PermissionedCommandCenterPanel`, `CommandGatePanel`, `PrivateOperatorApprovalLedgerPanel`, `UnifiedActionLayerPanel`, `ActionRegistryRuntimePanel` | Show prepare, human review, approval, blocked gates, safe local Gate A/B behavior, and audit posture. | What requires permission and what is allowed or forbidden? | P0 | v0 + Stitch | Do not convert permission-gated actions into executed actions. |
+| Settings/configuration surface | No dedicated Settings route found; closest current surfaces are `OperatingModePanel`, `LocalControlPlaneStatusPanel`, private operator gate, and environment-mode labels. | Future place for data mode, local/private auth, and control-plane status. | What environment and data mode am I using? | P2 | Stitch | Mark as future IA mapping rather than existing route. |
+| Error/empty/loading states | Suspense fallbacks in `src/App.tsx`; unavailable/error adapter states; empty local-state messages in record/gate panels. | Make disabled, unavailable, fallback, empty, and loading states understandable. | Is this empty, unavailable, locked, loading, or broken? | P1 | v0 | Capture manually by using existing states only; do not force backend changes for screenshots. |
+
+## Export Rules
+
+- Export only local/private screenshots and markdown context.
+- Do not export secrets, tokens, passphrases, credentials, private client data, or sensitive source records.
+- Do not present fixture, static, generated, imported, or local API data as live external truth.
+- Do not present permission-gated, dry-run, Prepare, or review states as executed actions.
+- Prefer desktop screenshots first, then one mobile Today screenshot.
+
